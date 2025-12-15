@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "jmcomic-zzz.one",
+        "18comic.ink",
+        "18comic.vip",
+        "jm18c-tin.org",
+        "jm18c-twie.vip"
+      ],
+      "domain_keyword": [
+        "18comic",
+        "jm18c"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_suffix": [
+        "bing.com",
+        "copilot.cloud.microsoft",
+        "copilot.microsoft.com"
+      ]
+    }
+  ]
+}

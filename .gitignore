@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# SingBox
+sing-box
+sing-box-*.tar.gz
+sing-box-*/
+cache.db
+.Test/
+ACL4SSR_Online_Full_WithIcon.yaml
+Rule/*.list
+ruleset/*.list

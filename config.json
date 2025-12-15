@@ -1,0 +1,887 @@
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true,
+      "store_rdrc": true
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "access_control_allow_origin": [
+        "http://127.0.0.1",
+        "https://yacd.metacubex.one",
+        "https://metacubex.github.io",
+        "https://metacubexd.pages.dev",
+        "https://board.zash.run.place"
+      ]
+    }
+  },
+  "dns": {
+    "independent_cache": true,
+    "servers": [
+      {
+        "tag": "google",
+        "type": "https",
+        "server": "8.8.8.8"
+      },
+      {
+        "tag": "ali",
+        "type": "https",
+        "server": "223.5.5.5"
+      },
+      {
+        "tag": "fakeip",
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
+      }
+    ],
+    "rules": [
+      {
+        "clash_mode": "Direct",
+        "server": "ali"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "google"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "address": [
+        "172.18.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "strict_route": true
+    },
+    {
+      "type": "mixed",
+      "listen": "::",
+      "listen_port": 7890
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "直连",
+      "type": "direct"
+    },
+    {
+      "tag": "REJECT",
+      "type": "block"
+    },
+    {
+      "tag": "节点选择",
+      "type": "selector",
+      "outbounds": [
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "手动切换",
+      "type": "selector",
+      "outbounds": [
+        "直连"
+      ]
+    },
+    {
+      "tag": "自动选择",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "电报消息",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "自动选择",
+        "狮城节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "OpenAi",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "自动选择",
+        "狮城节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "油管视频",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "自动选择",
+        "狮城节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "奈飞视频",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "自动选择",
+        "奈飞节点",
+        "狮城节点",
+        "香港节点",
+        "台湾节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "巴哈姆特",
+      "type": "selector",
+      "outbounds": [
+        "台湾节点",
+        "节点选择",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "哔哩哔哩",
+      "type": "selector",
+      "outbounds": [
+        "全球直连",
+        "台湾节点",
+        "香港节点"
+      ]
+    },
+    {
+      "tag": "国外媒体",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "自动选择",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换",
+        "直连"
+      ]
+    },
+    {
+      "tag": "国内媒体",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "谷歌FCM",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "微软Bing",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "微软云盘",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "微软服务",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "直连",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "苹果服务",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "Steam下载",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "游戏平台",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "美国节点",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "网易音乐",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "自动选择"
+      ]
+    },
+    {
+      "tag": "全球直连",
+      "type": "selector",
+      "outbounds": [
+        "直连",
+        "节点选择",
+        "自动选择"
+      ]
+    },
+    {
+      "tag": "广告拦截",
+      "type": "selector",
+      "outbounds": [
+        "REJECT",
+        "直连",
+        "节点选择"
+      ]
+    },
+    {
+      "tag": "应用净化",
+      "type": "selector",
+      "outbounds": [
+        "REJECT",
+        "直连",
+        "节点选择"
+      ]
+    },
+    {
+      "tag": "漏网之鱼",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "自动选择",
+        "直连",
+        "香港节点",
+        "台湾节点",
+        "狮城节点",
+        "日本节点",
+        "美国节点",
+        "韩国节点",
+        "手动切换"
+      ]
+    },
+    {
+      "tag": "香港节点",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "日本节点",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "美国节点",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "台湾节点",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "狮城节点",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "韩国节点",
+      "type": "urltest",
+      "outbounds": [
+        "直连"
+      ],
+      "interval": "300s",
+      "tolerance": 50
+    },
+    {
+      "tag": "奈飞节点",
+      "type": "selector",
+      "outbounds": [
+        "直连"
+      ]
+    },
+    {
+      "tag": "GLOBAL",
+      "type": "selector",
+      "outbounds": [
+        "节点选择",
+        "手动切换",
+        "自动选择",
+        "电报消息",
+        "OpenAi",
+        "油管视频",
+        "奈飞视频",
+        "巴哈姆特",
+        "哔哩哔哩",
+        "国外媒体",
+        "国内媒体",
+        "谷歌FCM",
+        "微软Bing",
+        "微软云盘",
+        "微软服务",
+        "苹果服务",
+        "游戏平台",
+        "Steam下载",
+        "网易音乐",
+        "全球直连",
+        "广告拦截",
+        "应用净化",
+        "漏网之鱼",
+        "香港节点",
+        "日本节点",
+        "美国节点",
+        "台湾节点",
+        "狮城节点",
+        "韩国节点",
+        "奈飞节点"
+      ]
+    }
+  ],
+  "route": {
+    "default_domain_resolver": {
+      "server": "ali"
+    },
+    "auto_detect_interface": true,
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "直连"
+      },
+      {
+        "clash_mode": "Direct",
+        "outbound": "直连"
+      },
+      {
+        "clash_mode": "Global",
+        "outbound": "节点选择"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "LocalAreaNetwork"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "UnBan"
+      },
+      {
+        "outbound": "广告拦截",
+        "rule_set": "BanAD"
+      },
+      {
+        "outbound": "应用净化",
+        "rule_set": "BanProgramAD"
+      },
+      {
+        "outbound": "谷歌FCM",
+        "rule_set": "GoogleFCM"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "GoogleCN"
+      },
+      {
+        "outbound": "Steam下载",
+        "rule_set": "SteamDownload"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "SteamCN"
+      },
+      {
+        "outbound": "微软Bing",
+        "rule_set": "Bing"
+      },
+      {
+        "outbound": "微软云盘",
+        "rule_set": "OneDrive"
+      },
+      {
+        "outbound": "微软服务",
+        "rule_set": "Microsoft"
+      },
+      {
+        "outbound": "苹果服务",
+        "rule_set": "Apple"
+      },
+      {
+        "outbound": "电报消息",
+        "rule_set": "Telegram"
+      },
+      {
+        "outbound": "OpenAi",
+        "rule_set": "OpenAi"
+      },
+      {
+        "outbound": "网易音乐",
+        "rule_set": "NetEaseMusic"
+      },
+      {
+        "outbound": "游戏平台",
+        "rule_set": "Epic"
+      },
+      {
+        "outbound": "游戏平台",
+        "rule_set": "Origin"
+      },
+      {
+        "outbound": "游戏平台",
+        "rule_set": "Sony"
+      },
+      {
+        "outbound": "游戏平台",
+        "rule_set": "Steam"
+      },
+      {
+        "outbound": "游戏平台",
+        "rule_set": "Nintendo"
+      },
+      {
+        "outbound": "油管视频",
+        "rule_set": "YouTube"
+      },
+      {
+        "outbound": "奈飞视频",
+        "rule_set": "Netflix"
+      },
+      {
+        "outbound": "巴哈姆特",
+        "rule_set": "Bahamut"
+      },
+      {
+        "outbound": "哔哩哔哩",
+        "rule_set": "BilibiliHMT"
+      },
+      {
+        "outbound": "哔哩哔哩",
+        "rule_set": "Bilibili"
+      },
+      {
+        "outbound": "国内媒体",
+        "rule_set": "ChinaMedia"
+      },
+      {
+        "outbound": "国外媒体",
+        "rule_set": "ProxyMedia"
+      },
+      {
+        "outbound": "香港节点",
+        "rule_set": "JMComic"
+      },
+      {
+        "outbound": "节点选择",
+        "rule_set": "ProxyGFWlist"
+      },
+      {
+        "outbound": "节点选择",
+        "rule_set": "ExpRule"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "ChinaDomain"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "ChinaCompanyIp"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "Download"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "geoip-cn"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "LocalAreaNetwork",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/LocalAreaNetwork.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "UnBan",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/UnBan.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "BanAD",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/BanAD.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "BanProgramAD",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/BanProgramAD.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "GoogleFCM",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/GoogleFCM.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "GoogleCN",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/GoogleCN.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "SteamCN",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/SteamCN.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Bing",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Bing.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "OneDrive",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/OneDrive.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Microsoft",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Microsoft.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Apple",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Apple.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Telegram.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "OpenAi",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/OpenAi.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "NetEaseMusic",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/NetEaseMusic.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Epic",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Epic.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Origin",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Origin.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Sony",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Sony.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Steam",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Steam.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Nintendo",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Nintendo.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "YouTube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/YouTube.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Netflix",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Netflix.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Bahamut",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Bahamut.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "BilibiliHMT",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/BilibiliHMT.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Bilibili",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Bilibili.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ChinaMedia",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ChinaMedia.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ProxyMedia",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ProxyMedia.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ProxyGFWlist",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ProxyGFWlist.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ChinaDomain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ChinaDomain.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ChinaCompanyIp",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ChinaCompanyIp.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "Download",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Download.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "SteamDownload",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/SteamDownload.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "JMComic",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/JMComic.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ExpRule",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ExpRule.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "geoip-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "download_detour": "直连"
+      }
+    ]
+  }
+}
