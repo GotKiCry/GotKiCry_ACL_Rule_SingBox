@@ -15,3 +15,4 @@ cache.db
 ACL4SSR_Online_Full_WithIcon.yaml
 Rule/*.list
 ruleset/*.list
+ruleset/*.json
