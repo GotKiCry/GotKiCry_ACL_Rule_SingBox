@@ -242,7 +242,7 @@ def main():
                 route_rules.append(entry)
                 
     TEMPLATE['route']['rules'] = route_rules
-
+    TEMPLATE['route']['final'] = '节点选择'
     # Write config.json
     print("Writing config.json...")
     with open('config.json', 'w', encoding='utf-8') as f:
