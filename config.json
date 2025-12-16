@@ -882,6 +882,7 @@
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
         "download_detour": "直连"
       }
-    ]
+    ],
+    "final": "节点选择"
   }
 }
