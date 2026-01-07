@@ -512,6 +512,14 @@
       },
       {
         "outbound": "全球直连",
+        "rule_set": "CNDNS"
+      },
+      {
+        "outbound": "节点选择",
+        "rule_set": "ProxyDNS"
+      },
+      {
+        "outbound": "全球直连",
         "rule_set": "UnBan"
       },
       {
@@ -527,7 +535,7 @@
         "rule_set": "GoogleFCM"
       },
       {
-        "outbound": "全球直连",
+        "outbound": "节点选择",
         "rule_set": "GoogleCN"
       },
       {
@@ -623,10 +631,6 @@
         "rule_set": "ProxyGFWlist"
       },
       {
-        "outbound": "节点选择",
-        "rule_set": "ExpRule"
-      },
-      {
         "outbound": "全球直连",
         "rule_set": "ChinaDomain"
       },
@@ -639,6 +643,14 @@
         "rule_set": "Download"
       },
       {
+        "outbound": "节点选择",
+        "rule_set": "ExpRule"
+      },
+      {
+        "outbound": "全球直连",
+        "rule_set": "ExpDirect"
+      },
+      {
         "outbound": "全球直连",
         "rule_set": "geoip-cn"
       }
@@ -649,6 +661,20 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/LocalAreaNetwork.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "CNDNS",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/CNDNS.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ProxyDNS",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ProxyDNS.srs",
         "download_detour": "直连"
       },
       {
@@ -873,6 +899,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ExpRule.srs",
+        "download_detour": "直连"
+      },
+      {
+        "tag": "ExpDirect",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ExpDirect.srs",
         "download_detour": "直连"
       },
       {
