@@ -100,8 +100,7 @@
   "outbounds": [
     {
       "tag": "直连",
-      "type": "direct",
-      "domain_resolver": "ali"
+      "type": "direct"
     },
     {
       "tag": "REJECT",

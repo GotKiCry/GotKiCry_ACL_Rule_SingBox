@@ -142,6 +142,10 @@ def main():
             }
         ]
         TEMPLATE['route']['default_domain_resolver']['server'] = 'local'
+    else:
+        # For the non-custom case, ensure references in rules match the tag
+        # Actually it's already "ali" in the TEMPLATE definition.
+        pass
 
     print(f"Reading {YAML_FILE}...")
     with open(YAML_FILE, 'r', encoding='utf-8') as f:
@@ -150,7 +154,7 @@ def main():
     # 1. Generate Outbounds from proxy-groups
     outbounds = []
     # Always add a base Direct/Block
-    outbounds.append({"tag": "直连", "type": "direct", "domain_resolver": default_resolver})
+    outbounds.append({"tag": "直连", "type": "direct"})
     outbounds.append({"tag": "REJECT", "type": "block"})
     
     # Name mapping for Sub-Store script compatibility
