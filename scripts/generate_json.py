@@ -17,8 +17,7 @@ TEMPLATE = {
     "enabled": True,
     "server": "time.apple.com",
     "server_port": 123,
-    "interval": "30m0s",
-    "detour": "直连"
+    "interval": "30m0s"
   },
   "experimental": {
     "cache_file": {
@@ -49,8 +48,7 @@ TEMPLATE = {
       {
         "tag": "ali",
         "type": "https",
-        "server": "223.5.5.5",
-        "detour": "直连"
+        "server": "223.5.5.5"
       },
       {
         "tag": "fakeip",
@@ -135,8 +133,7 @@ def main():
                 "tag": "local",
                 "type": CUSTOM_DNS_SERVER.get('type', 'udp'),
                 "server": CUSTOM_DNS_SERVER['server'],
-                "server_port": CUSTOM_DNS_SERVER.get('server_port', 53),
-                "detour": "直连" 
+                "server_port": CUSTOM_DNS_SERVER.get('server_port', 53)
             }
         ]
         TEMPLATE['dns']['rules'] = [
