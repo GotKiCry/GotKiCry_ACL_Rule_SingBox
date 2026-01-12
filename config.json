@@ -3,6 +3,13 @@
     "level": "info",
     "timestamp": true
   },
+  "ntp": {
+    "enabled": true,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m0s",
+    "detour": "直连"
+  },
   "experimental": {
     "cache_file": {
       "enabled": true,
@@ -22,6 +29,7 @@
   },
   "dns": {
     "independent_cache": true,
+    "strategy": "prefer_ipv4",
     "servers": [
       {
         "tag": "google",
@@ -31,7 +39,8 @@
       {
         "tag": "ali",
         "type": "https",
-        "server": "223.5.5.5"
+        "server": "223.5.5.5",
+        "detour": "直连"
       },
       {
         "tag": "fakeip",
@@ -42,12 +51,18 @@
     ],
     "rules": [
       {
-        "clash_mode": "Direct",
+        "clash_mode": "direct",
         "server": "ali"
       },
       {
-        "clash_mode": "Global",
+        "clash_mode": "global",
         "server": "google"
+      },
+      {
+        "outbound": [
+          "直连"
+        ],
+        "server": "ali"
       },
       {
         "query_type": [
@@ -55,23 +70,35 @@
           "AAAA"
         ],
         "server": "fakeip"
+      },
+      {
+        "server": "google"
       }
     ]
   },
   "inbounds": [
     {
       "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
       "address": [
-        "172.18.0.1/30",
+        "172.19.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
+      "mtu": 9000,
       "auto_route": true,
-      "strict_route": true
+      "strict_route": true,
+      "stack": "mixed",
+      "endpoint_independent_nat": true,
+      "sniff": true
     },
     {
       "type": "mixed",
+      "tag": "mixed-in",
       "listen": "::",
-      "listen_port": 7890
+      "listen_port": 7890,
+      "sniff": true,
+      "set_system_proxy": false
     }
   ],
   "outbounds": [

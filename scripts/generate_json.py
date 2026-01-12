@@ -3,10 +3,22 @@ import json
 import os
 
 # User provided template (stripped of dynamic parts)
+# 可配合 ShellCrash 等第三方客户端的本地 DNS (如 MosDNS/AdGuardHome) 使用
+# 格式示例: {"type": "udp", "server": "127.0.0.1", "server_port": 1053}
+# 如果设置了此项，内置的 Google/Ali/FakeIP 分流将被禁用，所有 DNS 流量指向此服务器
+CUSTOM_DNS_SERVER = None 
+
 TEMPLATE = {
   "log": {
     "level": "info",
     "timestamp": True
+  },
+  "ntp": {
+    "enabled": True,
+    "server": "time.apple.com",
+    "server_port": 123,
+    "interval": "30m0s",
+    "detour": "直连"
   },
   "experimental": {
     "cache_file": {
@@ -27,6 +39,7 @@ TEMPLATE = {
   },
   "dns": {
     "independent_cache": True,
+    "strategy": "prefer_ipv4",
     "servers": [
       {
         "tag": "google",
@@ -36,7 +49,8 @@ TEMPLATE = {
       {
         "tag": "ali",
         "type": "https",
-        "server": "223.5.5.5"
+        "server": "223.5.5.5",
+        "detour": "直连"
       },
       {
         "tag": "fakeip",
@@ -47,12 +61,18 @@ TEMPLATE = {
     ],
     "rules": [
       {
-        "clash_mode": "Direct",
+        "clash_mode": "direct",
         "server": "ali"
       },
       {
-        "clash_mode": "Global",
+        "clash_mode": "global",
         "server": "google"
+      },
+      {
+        "outbound": [
+          "直连"
+        ],
+        "server": "ali"
       },
       {
         "query_type": [
@@ -60,23 +80,35 @@ TEMPLATE = {
           "AAAA"
         ],
         "server": "fakeip"
+      },
+      {
+        "server": "google"
       }
     ]
   },
   "inbounds": [
     {
       "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
       "address": [
-        "172.18.0.1/30",
+        "172.19.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
+      "mtu": 9000,
       "auto_route": True,
-      "strict_route": True
+      "strict_route": True,
+      "stack": "mixed",
+      "endpoint_independent_nat": True,
+      "sniff": True
     },
     {
       "type": "mixed",
+      "tag": "mixed-in",
       "listen": "::",
-      "listen_port": 7890
+      "listen_port": 7890,
+      "sniff": True,
+      "set_system_proxy": False
     }
   ],
   "outbounds": [], # To be populated
@@ -95,6 +127,24 @@ YAML_FILE = 'ACL4SSR_Online_Full_WithIcon.yaml'
 REPO_BASE_URL = "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/"
 
 def main():
+    # 0. Apply Custom DNS if configured
+    if CUSTOM_DNS_SERVER:
+        print(f"Using Custom Local DNS: {CUSTOM_DNS_SERVER}")
+        TEMPLATE['dns']['servers'] = [
+            {
+                "tag": "local",
+                "type": CUSTOM_DNS_SERVER.get('type', 'udp'),
+                "server": CUSTOM_DNS_SERVER['server'],
+                "server_port": CUSTOM_DNS_SERVER.get('server_port', 53),
+                "detour": "直连" 
+            }
+        ]
+        TEMPLATE['dns']['rules'] = [
+            {
+                "server": "local"
+            }
+        ]
+
     print(f"Reading {YAML_FILE}...")
     with open(YAML_FILE, 'r', encoding='utf-8') as f:
         y = yaml.safe_load(f)
