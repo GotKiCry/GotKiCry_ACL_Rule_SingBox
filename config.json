@@ -526,10 +526,6 @@
         "outbound": "直连"
       },
       {
-        "protocol": "quic",
-        "outbound": "REJECT"
-      },
-      {
         "clash_mode": "Direct",
         "outbound": "直连"
       },
