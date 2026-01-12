@@ -124,7 +124,9 @@ REPO_BASE_URL = "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_Si
 
 def main():
     # 0. Apply Custom DNS if configured
+    default_resolver = "ali"
     if CUSTOM_DNS_SERVER:
+        default_resolver = "local"
         print(f"Using Custom Local DNS: {CUSTOM_DNS_SERVER}")
         TEMPLATE['dns']['servers'] = [
             {
@@ -139,6 +141,7 @@ def main():
                 "server": "local"
             }
         ]
+        TEMPLATE['route']['default_domain_resolver']['server'] = 'local'
 
     print(f"Reading {YAML_FILE}...")
     with open(YAML_FILE, 'r', encoding='utf-8') as f:
@@ -147,7 +150,7 @@ def main():
     # 1. Generate Outbounds from proxy-groups
     outbounds = []
     # Always add a base Direct/Block
-    outbounds.append({"tag": "直连", "type": "direct", "domain_resolver": "ali"})
+    outbounds.append({"tag": "直连", "type": "direct", "domain_resolver": default_resolver})
     outbounds.append({"tag": "REJECT", "type": "block"})
     
     # Name mapping for Sub-Store script compatibility
