@@ -262,6 +262,7 @@ def main():
       {"action": "sniff"},
       {"protocol": "dns", "action": "hijack-dns"},
       {"ip_is_private": True, "outbound": "直连"},
+      {"protocol": "quic", "outbound": "REJECT"},
       {"clash_mode": "Direct", "outbound": "直连"},
       {"clash_mode": "Global", "outbound": "🚀 节点选择"} # Assuming '🚀 节点选择' is the main group
     ])
