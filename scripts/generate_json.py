@@ -149,14 +149,24 @@ def main():
     # Always add a base Direct/Block
     outbounds.append({"tag": "直连", "type": "direct", "domain_resolver": "ali"})
     outbounds.append({"tag": "REJECT", "type": "block"})
-    # Also add a default selector if needed, but let's see what proxy-groups say.
-    # We maintain a mapping of YAML proxy names to SingBox tags
+    
+    # Name mapping for Sub-Store script compatibility
+    MAPPING = {
+        "节点选择": "🚀 节点选择",
+        "手动选择": "👉 手动选择",
+        "手动切换": "👉 手动选择",
+        "漏网之鱼": "🐟 漏网之鱼",
+        "自动选择": "♻️ 自动选择"
+    }
     
     if 'proxy-groups' in y:
         for pg in y['proxy-groups']:
             name = pg['name']
             pg_type = pg['type']
             proxies = pg.get('proxies', [])
+            
+            # Map name
+            mapped_name = MAPPING.get(name, name)
             
             # Map types
             sb_type = 'selector'
@@ -175,13 +185,19 @@ def main():
                 elif p == 'REJECT':
                     sb_outbounds.append('REJECT')
                 else:
-                    sb_outbounds.append(p)
+                    # Map references too
+                    sb_outbounds.append(MAPPING.get(p, p))
             
             outbound_entry = {
-                "tag": name,
+                "tag": mapped_name,
                 "type": sb_type,
                 "outbounds": sb_outbounds
             }
+            
+            # Add Sub-Store hint
+            if mapped_name in MAPPING.values():
+                outbound_entry["use_all_providers"] = True
+            
             if pg_type == 'url-test':
                 # Add interval/tolerance if present, with defaults
                 outbound_entry['interval'] = str(pg.get('interval', 300)) + 's'
@@ -237,7 +253,7 @@ def main():
       {"protocol": "dns", "action": "hijack-dns"},
       {"ip_is_private": True, "outbound": "直连"},
       {"clash_mode": "Direct", "outbound": "直连"},
-      {"clash_mode": "Global", "outbound": "节点选择"} # Assuming '节点选择' is the main group
+      {"clash_mode": "Global", "outbound": "🚀 节点选择"} # Assuming '🚀 节点选择' is the main group
     ])
 
     if 'rules' in y:
@@ -287,7 +303,7 @@ def main():
                 route_rules.append(entry)
                 
     TEMPLATE['route']['rules'] = route_rules
-    TEMPLATE['route']['final'] = '节点选择'
+    TEMPLATE['route']['final'] = '🚀 节点选择'
     # Write config.json
     print("Writing config.json...")
     with open('config.json', 'w', encoding='utf-8') as f:
