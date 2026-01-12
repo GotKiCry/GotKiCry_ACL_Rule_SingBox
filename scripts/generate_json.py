@@ -59,16 +59,14 @@ TEMPLATE = {
     ],
     "rules": [
       {
-        "clash_mode": "direct",
-        "server": "ali"
-      },
-      {
-        "clash_mode": "global",
+        "rule_set": "ProxyDNS",
         "server": "google"
       },
       {
-        "outbound": [
-          "直连"
+        "rule_set": [
+          "ChinaDomain",
+          "CNDNS",
+          "geoip-cn"
         ],
         "server": "ali"
       },
@@ -149,7 +147,7 @@ def main():
     # 1. Generate Outbounds from proxy-groups
     outbounds = []
     # Always add a base Direct/Block
-    outbounds.append({"tag": "直连", "type": "direct"})
+    outbounds.append({"tag": "直连", "type": "direct", "domain_resolver": "ali"})
     outbounds.append({"tag": "REJECT", "type": "block"})
     # Also add a default selector if needed, but let's see what proxy-groups say.
     # We maintain a mapping of YAML proxy names to SingBox tags

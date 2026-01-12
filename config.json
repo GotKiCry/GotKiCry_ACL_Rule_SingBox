@@ -49,16 +49,14 @@
     ],
     "rules": [
       {
-        "clash_mode": "direct",
-        "server": "ali"
-      },
-      {
-        "clash_mode": "global",
+        "rule_set": "ProxyDNS",
         "server": "google"
       },
       {
-        "outbound": [
-          "直连"
+        "rule_set": [
+          "ChinaDomain",
+          "CNDNS",
+          "geoip-cn"
         ],
         "server": "ali"
       },
@@ -102,7 +100,8 @@
   "outbounds": [
     {
       "tag": "直连",
-      "type": "direct"
+      "type": "direct",
+      "domain_resolver": "ali"
     },
     {
       "tag": "REJECT",
