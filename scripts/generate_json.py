@@ -156,7 +156,8 @@ def main():
         "手动选择": "👉 手动选择",
         "手动切换": "👉 手动选择",
         "漏网之鱼": "🐟 漏网之鱼",
-        "自动选择": "♻️ 自动选择"
+        "自动选择": "♻️ 自动选择",
+        "GLOBAL": "GLOBAL"
     }
     
     if 'proxy-groups' in y:
@@ -195,7 +196,9 @@ def main():
             }
             
             # Add Sub-Store hint
-            if mapped_name in MAPPING.values():
+            # User wants "🚀 节点选择" to exclude individual nodes.
+            # "手动选择", "漏网之鱼", "自动选择" and "GLOBAL" should include all.
+            if mapped_name in ["👉 手动选择", "🐟 漏网之鱼", "♻️ 自动选择", "GLOBAL"]:
                 outbound_entry["use_all_providers"] = True
             
             if pg_type == 'url-test':
