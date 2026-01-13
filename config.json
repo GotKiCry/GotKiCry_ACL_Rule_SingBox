@@ -688,259 +688,296 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/LocalAreaNetwork.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "CNDNS",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/CNDNS.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ProxyDNS",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ProxyDNS.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "UnBan",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/UnBan.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "BanAD",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/BanAD.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "BanProgramAD",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/BanProgramAD.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "GoogleFCM",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/GoogleFCM.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "GoogleCN",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/GoogleCN.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "SteamCN",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/SteamCN.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Bing",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Bing.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "OneDrive",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/OneDrive.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Microsoft",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Microsoft.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Apple",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Apple.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Telegram",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Telegram.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "OpenAi",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/OpenAi.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "NetEaseMusic",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/NetEaseMusic.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Epic",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Epic.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Origin",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Origin.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Sony",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Sony.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Steam",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Steam.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Nintendo",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Nintendo.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "YouTube",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/YouTube.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Netflix",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Netflix.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Bahamut",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Bahamut.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "BilibiliHMT",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/BilibiliHMT.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Bilibili",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Bilibili.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ChinaMedia",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ChinaMedia.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ProxyMedia",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ProxyMedia.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ProxyGFWlist",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ProxyGFWlist.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ChinaDomain",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ChinaDomain.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ChinaCompanyIp",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ChinaCompanyIp.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "Download",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/Download.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "SteamDownload",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/SteamDownload.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "JMComic",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/JMComic.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ExpRule",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ExpRule.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "ExpDirect",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule_SingBox/master/ruleset/ExpDirect.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       },
       {
         "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
-        "download_detour": "直连"
+        "download_detour": "direct",
+        "update_interval": "1d"
       }
     ],
     "final": "🚀 节点选择"
