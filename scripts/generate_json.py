@@ -196,12 +196,22 @@ def main():
         "奈飞节点": "🎥 奈飞节点"
     }
     
+    # Define groups to ignore (Regions + Netflix Node which is usually a sub-group)
+    IGNORED_GROUPS = [
+        "香港节点", "日本节点", "美国节点", "台湾节点", 
+        "狮城节点", "韩国节点", "奈飞节点"
+    ]
+
     if 'proxy-groups' in y:
         for pg in y['proxy-groups']:
             name = pg['name']
             pg_type = pg['type']
             proxies = pg.get('proxies', [])
             
+            # Skip ignored groups
+            if name in IGNORED_GROUPS:
+                continue
+
             # Map name
             mapped_name = MAPPING.get(name, name)
             
@@ -217,6 +227,10 @@ def main():
             # Map proxies list
             sb_outbounds = []
             for p in proxies:
+                # Skip references to ignored groups
+                if p in IGNORED_GROUPS:
+                    continue
+
                 if p == 'DIRECT':
                     sb_outbounds.append('直连')
                 elif p == 'REJECT':
@@ -234,7 +248,8 @@ def main():
             # Add Sub-Store hint
             # User wants "🚀 节点选择" to exclude individual nodes.
             # "手动选择", "漏网之鱼", "自动选择" and "GLOBAL" should include all.
-            if mapped_name in ["👉 手动选择", "🐟 漏网之鱼", "♻️ 自动选择", "GLOBAL"]:
+            # UPDATE: User removed regions, so "🚀 节点选择" MUST now use all providers to see nodes.
+            if mapped_name in ["👉 手动选择", "🐟 漏网之鱼", "♻️ 自动选择", "GLOBAL", "🚀 节点选择"]:
                 outbound_entry["use_all_providers"] = True
             
             if pg_type == 'url-test':
@@ -243,7 +258,7 @@ def main():
                 outbound_entry['tolerance'] = pg.get('tolerance', 50)
             
             # Ensure not empty to avoid SingBox "missing tags" error
-            if not sb_outbounds:
+            if not sb_outbounds and not outbound_entry.get("use_all_providers"):
                 sb_outbounds.append('直连')
                 
             outbounds.append(outbound_entry)
@@ -310,6 +325,9 @@ def main():
                     target = '直连'
                 elif r_target == 'REJECT':
                     target = 'REJECT'
+                elif r_target in IGNORED_GROUPS:
+                    # Redirect removed regions to main selector
+                    target = '🚀 节点选择'
                 else:
                     target = MAPPING.get(r_target, r_target)
                 
