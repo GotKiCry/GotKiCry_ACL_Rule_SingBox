@@ -60,7 +60,7 @@ def create_singbox_json(rules):
         srs_rules.append(rule_entry)
         
     return {
-        "version": 1,
+        "version": 3,
         "rules": srs_rules
     }
 

@@ -85,15 +85,13 @@
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed",
-      "endpoint_independent_nat": true,
-      "sniff": true
+      "endpoint_independent_nat": true
     },
     {
       "type": "mixed",
       "tag": "mixed-in",
       "listen": "::",
       "listen_port": 7890,
-      "sniff": true,
       "set_system_proxy": false
     }
   ],
@@ -113,20 +111,21 @@
         "♻️ 自动选择",
         "👉 手动选择",
         "直连"
-      ],
-      "use_all_providers": true
+      ]
     },
     {
       "tag": "👉 手动选择",
       "type": "selector",
-      "outbounds": [],
-      "use_all_providers": true
+      "outbounds": [
+        "直连"
+      ]
     },
     {
       "tag": "♻️ 自动选择",
       "type": "urltest",
-      "outbounds": [],
-      "use_all_providers": true,
+      "outbounds": [
+        "直连"
+      ],
       "interval": "300s",
       "tolerance": 50
     },
@@ -311,8 +310,7 @@
         "♻️ 自动选择",
         "直连",
         "👉 手动选择"
-      ],
-      "use_all_providers": true
+      ]
     },
     {
       "tag": "GLOBAL",
@@ -341,8 +339,7 @@
         "🛑 广告拦截",
         "🛡️ 应用净化",
         "🐟 漏网之鱼"
-      ],
-      "use_all_providers": true
+      ]
     }
   ],
   "route": {
@@ -776,7 +773,7 @@
         "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "download_detour": "直连"
       }
     ],

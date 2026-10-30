@@ -96,14 +96,12 @@ TEMPLATE = {
       "strict_route": True,
       "stack": "mixed",
       "endpoint_independent_nat": True,
-      "sniff": True
     },
     {
       "type": "mixed",
       "tag": "mixed-in",
       "listen": "::",
       "listen_port": 7890,
-      "sniff": True,
       "set_system_proxy": False
     }
   ],
@@ -250,7 +248,8 @@ def main():
             # "手动选择", "漏网之鱼", "自动选择" and "GLOBAL" should include all.
             # UPDATE: User removed regions, so "🚀 节点选择" MUST now use all providers to see nodes.
             if mapped_name in ["👉 手动选择", "🐟 漏网之鱼", "♻️ 自动选择", "GLOBAL", "🚀 节点选择"]:
-                outbound_entry["use_all_providers"] = True
+                if os.environ.get("SUBSTORE_HINT", "0") == "1":
+                    outbound_entry["use_all_providers"] = True
             
             if pg_type == 'url-test':
                 # Add interval/tolerance if present, with defaults
@@ -291,7 +290,7 @@ def main():
         "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "url": "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
         "download_detour": "直连"
     })
             

@@ -1,84 +1,77 @@
-import yaml
-import requests
+#!/usr/bin/env python3
+"""从上游 ACL4SSR 配置同步 rule-providers 对应的 .list 规则文件。
+
+数据源: https://github.com/GotKiCry/GotKiCry_ACL_Rule
+输出:   ./ruleset/<name>.list （并按需下载 ACL4SSR_Online_Full_WithIcon.yaml 供 generate_json.py 使用）
+
+任意一个规则文件下载失败都会以非 0 退出，避免"静默缺规则"。
+"""
 import os
 import sys
 
-def update_rules(config_path):
-    print(f"Reading config from {config_path}...")
-    
-    # Check if config_path is a URL
-    if config_path.startswith('http://') or config_path.startswith('https://'):
-        try:
-            print(f"Downloading config from {config_path}...")
-            response = requests.get(config_path, timeout=30)
-            response.raise_for_status()
-            config = yaml.safe_load(response.text)
-            
-            # Save strictly for reference/caching, but we work from memory/response usually.
-            # However, generate_json.py reads a local file. So we MUST save it locally.
-            local_filename = "ACL4SSR_Online_Full_WithIcon.yaml"
-            with open(local_filename, 'wb') as f:
-                f.write(response.content)
-            print(f"Saved config to {local_filename}")
-            
-        except Exception as e:
-             print(f"Error downloading config: {e}")
-             sys.exit(1)
-    else:
-        try:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                config = yaml.safe_load(f)
-        except Exception as e:
-            print(f"Error reading config file: {e}")
-            sys.exit(1)
+import requests
+import yaml
 
-    if 'rule-providers' not in config:
-        print("No rule-providers found in config.")
-        return
+CONFIG_URL = "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule/master/ACL4SSR_Online_Full_WithIcon.yaml"
+LOCAL_YAML = "ACL4SSR_Online_Full_WithIcon.yaml"
+TIMEOUT = 30
 
-    providers = config['rule-providers']
-    
-    # Ensure the root directory for relative paths is the repo root
-    # Assuming script is run from repo root or we adjust paths
-    # The config paths are like ./ruleset/xxx.list
-    
+
+def fetch_config(url):
+    print(f"Downloading config from {url} ...")
+    resp = requests.get(url, timeout=TIMEOUT)
+    resp.raise_for_status()
+    with open(LOCAL_YAML, "wb") as f:
+        f.write(resp.content)
+    print(f"Saved config to {LOCAL_YAML} ({len(resp.content)} bytes)")
+    return yaml.safe_load(resp.text)
+
+
+def update_rules(config):
+    providers = config.get("rule-providers") or {}
+    if not providers:
+        print("ERROR: no rule-providers found in config")
+        return False
+
+    print(f"Found {len(providers)} rule providers")
+    failed = []
     for name, details in providers.items():
-        # Get source URL (upstream) if available, otherwise fallback to url
-        url = details.get('source') or details.get('url')
-        path = details.get('path')
-        
+        url = details.get("source") or details.get("url")
+        path = details.get("path")
         if not url or not path:
-            print(f"Skipping {name}: Missing url or path")
+            print(f"  SKIP {name}: missing url/path")
+            failed.append(name)
             continue
-            
-        print(f"Updating {name} from {url}...")
-        
         try:
-            # Create directory if it doesn't exist
-            dir_name = os.path.dirname(path)
-            if dir_name and not os.path.exists(dir_name):
-                os.makedirs(dir_name)
-                
-            response = requests.get(url, timeout=30)
-            response.raise_for_status()
-            
-            # Write content to file
-            with open(path, 'wb') as f:
-                f.write(response.content)
-                
-            print(f"Successfully updated {name} to {path}")
-            
-        except Exception as e:
-            print(f"Failed to update {name}: {e}")
+            parent = os.path.dirname(path)
+            if parent:
+                os.makedirs(parent, exist_ok=True)
+            resp = requests.get(url, timeout=TIMEOUT)
+            resp.raise_for_status()
+            if not resp.content:
+                raise ValueError("empty response")
+            with open(path, "wb") as f:
+                f.write(resp.content)
+            print(f"  OK   {name} -> {path} ({len(resp.content)} bytes)")
+        except Exception as exc:
+            print(f"  FAIL {name}: {exc}")
+            failed.append(name)
+
+    if failed:
+        print(f"ERROR: {len(failed)} rule(s) failed: {', '.join(failed)}")
+        return False
+    print(f"All {len(providers)} rule lists updated")
+    return True
+
+
+def main():
+    try:
+        config = fetch_config(CONFIG_URL)
+    except Exception as exc:
+        print(f"ERROR: failed to fetch config: {exc}")
+        return 1
+    return 0 if update_rules(config) else 1
+
 
 if __name__ == "__main__":
-    # Assuming config is in the root directory relative to where script is run
-    # If script is in scripts/ and run from root, config is ./ACL4SSR_Online_Full_WithIcon.yaml
-    CONFIG_FILE = "https://raw.githubusercontent.com/GotKiCry/GotKiCry_ACL_Rule/master/ACL4SSR_Online_Full_WithIcon.yaml"
-    
-    # Logic to handle local vs remote check
-    if not CONFIG_FILE.startswith('http') and not os.path.exists(CONFIG_FILE):
-        print(f"Config file {CONFIG_FILE} not found!")
-        sys.exit(1)
-        
-    update_rules(CONFIG_FILE)
+    sys.exit(main())

@@ -1,59 +1,95 @@
-name: Update ACL Rules
+name: Sync & Compile Rules
 
-# 触发条件：每天 UTC 0点 (北京时间 8点) 或手动触发
+# 触发时机：
+#  - 每天 UTC 03:00（北京时间 11:00）自动同步，源仓库 GotKiCry_ACL_Rule 在 UTC 02:00 更新
+#  - 也可以在 Actions 页面手动触发
 on:
+  schedule:
+    - cron: '0 3 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+# 同一时间只允许一个任务在跑，避免并发 push 冲突
+concurrency:
+  group: sync-compile-rules
+  cancel-in-progress: false
+
+env:
+  SINGBOX_VERSION: "1.13.21"
+  EXPECTED_RULE_COUNT: "36"
+
 jobs:
-  update-rules:
+  sync-and-compile:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pyyaml requests
-        
-    - name: Run update script
-      run: |
-        python scripts/update.py
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Install sing-box
-      run: |
-        VERSION="1.10.1"
-        wget "https://github.com/SagerNet/sing-box/releases/download/v${VERSION}/sing-box-${VERSION}-linux-amd64.tar.gz"
-        tar -xzf "sing-box-${VERSION}-linux-amd64.tar.gz"
-        sudo mv "sing-box-${VERSION}-linux-amd64/sing-box" /usr/local/bin/
-        rm -rf "sing-box-${VERSION}-linux-amd64"*
-        sing-box version
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-    - name: Compile Rules
-      run: python scripts/compile.py
+      - name: Install Python dependencies
+        run: pip install --quiet pyyaml requests
 
-    - name: Generate SingBox Config
-      run: python scripts/generate_json.py
-        
-    - name: Check for changes
-      id: git-check
-      run: |
-        git config user.name 'github-actions[bot]'
-        git config user.email 'github-actions[bot]@users.noreply.github.com'
-        git add .
-        git diff --staged --quiet || echo "changes=true" >> $GITHUB_OUTPUT
-        
-    - name: Commit and push changes
-      if: steps.git-check.outputs.changes == 'true'
-      run: |
-        git commit -m "chore: update rules $(date +'%Y-%m-%d')"
-        git push
+      - name: Fetch upstream rule lists
+        run: python scripts/update.py
+
+      - name: Verify fetched lists
+        run: |
+          n=$(ls ruleset/*.list 2>/dev/null | wc -l)
+          echo "fetched $n .list files"
+          if [ "$n" -ne "$EXPECTED_RULE_COUNT" ]; then
+            echo "::error::expected $EXPECTED_RULE_COUNT rule lists, got $n"
+            exit 1
+          fi
+          empty=$(find ruleset -name '*.list' -size 0 | wc -l)
+          if [ "$empty" -ne 0 ]; then
+            echo "::error::$empty empty rule list file(s) detected"
+            find ruleset -name '*.list' -size 0
+            exit 1
+          fi
+
+      - name: Install sing-box
+        run: |
+          V="$SINGBOX_VERSION"
+          url="https://github.com/SagerNet/sing-box/releases/download/v${V}/sing-box-${V}-linux-amd64.tar.gz"
+          wget -q "$url" -O /tmp/sing-box.tar.gz
+          tar -xzf /tmp/sing-box.tar.gz -C /tmp
+          sudo install -m 755 "/tmp/sing-box-${V}-linux-amd64/sing-box" /usr/local/bin/sing-box
+          sing-box version
+
+      - name: Compile rule sets to .srs
+        run: python scripts/compile.py
+
+      - name: Verify compiled rule sets
+        run: |
+          list=$(ls ruleset/*.list | wc -l)
+          srs=$(ls ruleset/*.srs | wc -l)
+          echo "list=$list srs=$srs"
+          if [ "$srs" -ne "$list" ]; then
+            echo "::error::compile mismatch: $srs .srs vs $list .list"
+            exit 1
+          fi
+
+      - name: Generate config.json
+        run: python scripts/generate_json.py
+
+      - name: Validate config.json with sing-box
+        run: sing-box check -c config.json
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A ruleset/ config.json
+          if git diff --staged --quiet; then
+            echo "No changes, nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore: sync rules $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
